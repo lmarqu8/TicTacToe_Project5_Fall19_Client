@@ -26,7 +26,13 @@ import javafx.stage.WindowEvent;
 public class TicTacToe_Client extends Application {
 	//Server serverConnection;
 	Client clientConnection;
-
+	String difficulty = new String();
+	String portString = new String();
+	String ipString = new String();
+	int port;
+	int ip;
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -151,15 +157,27 @@ public class TicTacToe_Client extends Application {
 		
 		/*_________________________________________*/
 		
-		//Client connects to server action
-		startConnection.setOnAction(e-> {primaryStage.setScene(difficultyScene);
-		primaryStage.setTitle("This is a client");
-		clientConnection = new Client(data->{
-		Platform.runLater(()->{leaderBoard.getItems().add(data.toString());});}, "127.0.0.1", 5555);
-			clientConnection.start();});
+		//Client connects to server action //TODO 
+		startConnection.setOnAction(e-> {
+		
+		portString = portText.getText();
+		ipString = ipText.getText();
+		if(isNumeric(portString)) {
+			port = Integer.parseInt(portString);
+			clientConnection = new Client(data->{
+				Platform.runLater(()->{leaderBoard.getItems().add(data.toString());});}, ipString, port);
+					clientConnection.start();
+			primaryStage.setScene(difficultyScene);
+			primaryStage.setTitle("T^3 Select Difficulty");
+		}
+		
+		});
 		
 		
 		//Set Difficulties
+		easyButton.setOnAction(e->{ difficulty = "easy";});//end of easyButton
+		medButton.setOnAction(e->{ difficulty = "medium";});//end of medButton
+		expButton.setOnAction(e->{ difficulty = "expert";});//end of expButton
 		
 		
 		//Start GameScene
@@ -179,6 +197,18 @@ public class TicTacToe_Client extends Application {
         });
 		primaryStage.setScene(portScene);
 		primaryStage.show();
+	}
+	
+	public static boolean isNumeric(String strNum) {
+	    if (strNum == null) {
+	        return false;
+	    }
+	    try {
+	        Integer d = Integer.parseInt(strNum);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+	    return true;
 	}
 
 }
