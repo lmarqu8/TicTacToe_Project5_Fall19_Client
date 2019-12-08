@@ -33,34 +33,23 @@ public class TicTacToe extends Application {
 
 }*/
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import sun.jvm.hotspot.oops.Array;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class TicTacToe extends Application {
     //Server serverConnection;
@@ -195,22 +184,22 @@ public class TicTacToe extends Application {
             }// end of
         }//end of for
 
-		buttonList.forEach(button -> {
-			button.setOnAction(event -> {
-				button.setDisable(true);
-				ImageView player = new ImageView(new Image("/nought.png", 70, 70, true, false));
-				button.setGraphic(player);
-				int index = Integer.parseInt(button.getId().substring(3));
-				gameInfo.setPlayerMove(index);
-				try {
-					clientConnection.out.writeObject(gameInfo);
-					System.out.print("sent player move");
-					this.gameInfo = (GameInfo) clientConnection.in.readObject();
+        buttonList.forEach(button -> {
+            button.setOnAction(event -> {
+                button.setDisable(true);
+                ImageView player = new ImageView(new Image("/nought.png", 70, 70, true, false));
+                button.setGraphic(player);
+                int index = Integer.parseInt(button.getId().substring(3));
+                gameInfo.setPlayerMove(index);
+                try {
+                    clientConnection.out.writeObject(gameInfo);
+                    System.out.print("sent player move");
+                    this.gameInfo = (GameInfo) clientConnection.in.readObject();
 
-				} catch (IOException | ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			});
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            });
         });
 
 
@@ -230,9 +219,6 @@ public class TicTacToe extends Application {
 
         Scene gameScene = new Scene(gamePane);
 
-
-
-
         /*_________________________________________*/
 
         //Client connects to server action
@@ -245,8 +231,7 @@ public class TicTacToe extends Application {
         });
 
 
-        //Set Difficulties
-
+        //TODO: Set Difficulties
 
         //Start GameScene
         startButton.setOnAction(e -> {
@@ -271,13 +256,13 @@ public class TicTacToe extends Application {
         });
 
         quit.setOnAction(event -> {
-        	Platform.exit();
-        	System.exit(0);
-		});
+            Platform.exit();
+            System.exit(0);
+        });
 
         backToMenu.setOnAction(event -> {
-        	primaryStage.setScene(difficultyScene);
-		});
+            primaryStage.setScene(difficultyScene);
+        });
 
         primaryStage.setScene(portScene);
         primaryStage.show();

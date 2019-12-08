@@ -3,9 +3,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,8 +33,7 @@ public class LoginController {
     public boolean isValidIP(String ip) {
         try {
             return Inet4Address.getByName(ip).getHostAddress().equals(ip);
-        }
-        catch (UnknownHostException e) {
+        } catch (UnknownHostException e) {
             return false;
         }
     }
@@ -56,12 +55,10 @@ public class LoginController {
         if (!isValidIP(clientIP.getText())) {
             errorMessage.setText("Invalid IP Address");
             clientIP.clear();
-        }
-        else if (!isValidPort(Integer.parseInt(clientPortNumber.getText()))) {
+        } else if (!isValidPort(Integer.parseInt(clientPortNumber.getText()))) {
             errorMessage.setText("Invalid Port #");
             clientPortNumber.clear();
-        }
-        else {
+        } else {
             errorMessage.setText("");
             client = new Client(clientIP.getText(), Integer.parseInt(clientPortNumber.getText()));
             client.start();
@@ -75,7 +72,7 @@ public class LoginController {
     void nextScene() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/difficulty.fxml"));
         Parent difficultyInfo = loader.load();
-        Scene diffScene = new Scene(difficultyInfo,700,700);
+        Scene diffScene = new Scene(difficultyInfo, 700, 700);
         Stage currStage = (Stage) rootLogin.getScene().getWindow();
         currStage.setScene(diffScene);
     }
